@@ -24,8 +24,11 @@ jobs:
           framework: terraform
           hard_fail_on: CRITICAL
           skip_check: CKV_TF_1
-          output_format: cli,sarif
-          output_file_path: console,results.sarif
+          output_format: sarif
+          output_file_path: results.sarif
 
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: results.sarif
+          category: checkov
