@@ -1,0 +1,31 @@
+name: Checkov
+
+on:
+  workflow_call:
+
+jobs:
+  checkov:
+    name: "Checkov"
+    runs-on: ubuntu-latest
+
+    permissions:
+        contents: read          # for actions/checkout to fetch code
+        security-events: write  # for github/codeql-action/upload-sarif to upload SARIF results
+        actions: read           # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
+        
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Checkov IaC
+        uses: bridgecrewio/checkov-action@99bb2caf247dfd9f03cf984373bc6043d4e32ebf # v12.2673.0
+        with:
+          directory: .
+          framework: terraform
+          hard_fail_on: CRITICAL
+          skip_check: CKV_TF_1
+          output_format: cli, sarif
+          output_file_path: console, results.sarif
+
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v2
