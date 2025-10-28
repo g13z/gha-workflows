@@ -1,2 +1,3 @@
-# gha-workflows
-Shared GitHub Actions workflows
+# GitHub Action Workflows
+
+[Understanding GitHub Actions](https://docs.github.com/en/actions/get-started/understand-github-actions)
